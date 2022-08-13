@@ -1,0 +1,112 @@
+@import '_variables';
+
+*{
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    padding: 2*$paddingVal $paddingVal;
+    background-color: $veryLightGray;
+}
+
+.comment{
+    display: flex;
+    flex-direction: column;
+    padding: $paddingVal;
+    margin-bottom: $marginVal;
+    background-color: $white;
+    border-radius: 6px;
+
+    &__header,
+    &__actions{
+        display: flex;
+    }
+
+    &__header{
+        align-items: center;
+        width: 100%;
+
+        .user{
+            display: flex;
+            align-items: center;
+            margin-right: $marginVal;
+
+            p{
+                color: $darkBlue;
+                font-weight: 700;
+            }
+
+            &-img{
+                margin-right: $marginVal;
+            }
+        }
+        .date{
+            color: $grayishBlue;
+            font-size: .8rem;
+        }
+    }
+
+    &__content{
+
+        margin: $marginVal 0;
+
+        p{
+            color: $grayishBlue;
+        }
+
+    }
+
+    &__actions{
+        justify-content: space-between;
+        align-items: center;
+        
+        .score-wrap{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 80px;
+            height: 36px;
+            background-color: $veryLightGray;
+            border-radius: 6px;
+
+            .score{
+                color: $moderateBlue;
+                font-weight: 500;
+            }
+
+            .upvote, 
+            .downvote{
+                background-size: 16px;
+                width: 16px;
+                height: 16px;
+                cursor: pointer;
+            }
+
+            .upvote{
+                background: url('../images/icon-plus.svg') center no-repeat ;
+            }
+
+            .downvote{
+                background: url('../images/icon-minus.svg') center no-repeat ;
+            }
+        }
+        .btn-wrap{
+            .action{
+                margin: 0 $marginVal/4;
+                font-weight: 500;
+                border: none;
+                background-color: unset;
+
+                &::before{
+                    content: '';
+                    width: 16px;
+                    height: 16px;
+                    margin-left: $marginVal/4;
+                }
+            }
+        }
+    }
+}
