@@ -1,0 +1,25 @@
+@import '_variables';
+
+*{
+    font-size: 16px;
+    font-family: 'Rubik', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    padding: 2*$paddingVal $paddingVal;
+    background-color: $veryLightGray;
+
+    &.open-modal{
+        overflow: hidden;
+    }
+}
+
+
+p{
+    font-size: 0.9rem;
+    line-height: 1.4rem;
+    color: $grayishBlue;
+}

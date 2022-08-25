@@ -1,15 +1,55 @@
+@import '_global';
 @import '_variables';
 
-*{
-    font-size: 16px;
-    font-family: 'Rubik', sans-serif;
-    margin: 0;
-    padding: 0;
-}
 
-body{
-    padding: 2*$paddingVal $paddingVal;
-    background-color: $veryLightGray;
+.comments{
+    margin: auto;
+    max-width: 800px;
+
+    &__replay-wrap{
+        display: flex;
+
+        &-inner{
+            height: 100%;
+            margin-left: 16px;
+        }
+
+        &::before{
+            content: '';
+            display: inline-block;
+            width: 3px;
+            margin-bottom: 16px;
+            background-color: red;
+        }
+    }
+
+    &__add-wrap{
+        background-color: $white;
+        border-radius: $borderRadius;
+    }
+
+    &__add{
+        display: grid;
+        grid-template-areas: 
+        "textarea textarea"
+        "img button"
+        ;
+        align-items: center;
+        padding: $paddingVal;
+
+        .textarea{
+            grid-area: textarea;
+            height: 100px;
+            padding: $paddingVal/2 $paddingVal;
+            border: 1px solid $lightGray;
+            border-radius: $borderRadius;
+            margin-bottom: $marginVal * 2;
+
+        }
+        .logged-user-img{
+            grid-area: img;
+        }
+    }
 }
 
 .comment{
@@ -18,7 +58,7 @@ body{
     padding: $paddingVal;
     margin-bottom: $marginVal;
     background-color: $white;
-    border-radius: 6px;
+    border-radius: $borderRadius;
 
     &__header,
     &__actions{
@@ -50,13 +90,7 @@ body{
     }
 
     &__content{
-
         margin: $marginVal 0;
-
-        p{
-            color: $grayishBlue;
-        }
-
     }
 
     &__actions{
@@ -70,7 +104,7 @@ body{
             width: 80px;
             height: 36px;
             background-color: $veryLightGray;
-            border-radius: 6px;
+            border-radius: $borderRadius;
 
             .score{
                 color: $moderateBlue;
@@ -95,18 +129,127 @@ body{
         }
         .btn-wrap{
             .action{
-                margin: 0 $marginVal/4;
+                margin: 0 ($marginVal/4);
                 font-weight: 500;
+                color: $moderateBlue;
                 border: none;
                 background-color: unset;
+                cursor: pointer;
+                opacity: 1;
+                transition: opacity .3s linear;
 
+                &:hover{
+                    opacity: .5;
+                }
                 &::before{
                     content: '';
-                    width: 16px;
-                    height: 16px;
-                    margin-left: $marginVal/4;
+                    display: inline-block;
+                    width: 18px;
+                    height: 18px;
+                    margin-right: $marginVal/2;
+                    vertical-align: bottom;
+                }
+            }
+            .delete{
+                color: $softRed;
+
+                &::before{
+                    background: url('../images/icon-delete.svg') center no-repeat;
+                    background-size: 14px;
+                }
+            }
+
+            .reply{
+
+                &::before{
+                    background: url('../images/icon-reply.svg') center no-repeat;
+                    background-size: 14px;
+                }
+            }
+            .edit{
+
+                &::before{
+                    background: url('../images/icon-edit.svg') center no-repeat;
+                    background-size: 14px;
                 }
             }
         }
     }
+}
+
+.btn{
+    height: 50px;
+    width: 120px;
+    border: none;
+    border-radius: $borderRadius;
+    color: $white;
+    font-weight: 500;
+    background-color: $grayishBlue;
+    text-transform: uppercase;
+    cursor: pointer;
+    opacity: 1;
+    transition: opacity .3s linear;
+
+    &:hover{
+        opacity: .5;
+    }
+
+    &__submit{
+        grid-area: button;
+        justify-self: end;      
+        background-color: $moderateBlue;
+        font-size: 1.1rem;
+    }
+
+    &__yes,
+    &__no{
+        width: 130px;
+    }
+
+    &__yes{
+        background-color: $softRed;
+        margin-left: $marginVal/2;
+    }
+}
+
+.modal{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    padding: 16px;
+    border-radius: $borderRadius;
+    background-color: $white;
+    z-index: 100;
+
+    &__title{
+        font-size: 1.2rem;
+        font-weight: 500;
+        margin: $marginVal 0;
+    }
+
+    &__btn-wrap{
+        display: flex;
+        justify-content: center;
+        margin-top: $marginVal;
+    }
+}
+
+.mask{
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background-color: #000;
+    opacity: .3;
+    z-index: 99;
+}
+
+.modal.active,
+.mask.active{
+    display: block;
 }

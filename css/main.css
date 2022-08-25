@@ -1,69 +1,168 @@
 * {
   font-size: 16px;
-  font-family: "Rubik", sans-serif;
+  font-family: 'Rubik', sans-serif;
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
 body {
   padding: 32px 16px;
-  background-color: hsl(228deg, 33%, 97%);
+  background-color: #f5f6fa;
+}
+
+body.open-modal {
+  overflow: hidden;
+}
+
+p {
+  font-size: 0.9rem;
+  line-height: 1.4rem;
+  color: #67727e;
+}
+
+.comments {
+  margin: auto;
+  max-width: 800px;
+}
+
+.comments__replay-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.comments__replay-wrap-inner {
+  height: 100%;
+  margin-left: 16px;
+}
+
+.comments__replay-wrap::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  margin-bottom: 16px;
+  background-color: red;
+}
+
+.comments__add-wrap {
+  background-color: white;
+  border-radius: 6px;
+}
+
+.comments__add {
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: "textarea textarea" "img button";
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 16px;
+}
+
+.comments__add .textarea {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 2;
+  grid-area: textarea;
+  height: 100px;
+  padding: 8px 16px;
+  border: 1px solid #eaecf1;
+  border-radius: 6px;
+  margin-bottom: 32px;
+}
+
+.comments__add .logged-user-img {
+  -ms-grid-row: 2;
+  -ms-grid-column: 1;
+  grid-area: img;
 }
 
 .comment {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   padding: 16px;
   margin-bottom: 16px;
-  background-color: hsl(0deg, 0%, 100%);
+  background-color: white;
   border-radius: 6px;
 }
+
 .comment__header, .comment__actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
 }
+
 .comment__header {
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 100%;
 }
+
 .comment__header .user {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  align-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   margin-right: 16px;
 }
+
 .comment__header .user p {
-  color: hsl(212deg, 24%, 26%);
+  color: #324152;
   font-weight: 700;
 }
+
 .comment__header .user-img {
   margin-right: 16px;
 }
+
 .comment__header .date {
-  color: hsl(211deg, 10%, 45%);
-  font-size: 0.8rem;
+  color: #67727e;
+  font-size: .8rem;
 }
+
 .comment__content {
   margin: 16px 0;
 }
-.comment__content p {
-  color: hsl(211deg, 10%, 45%);
-}
+
 .comment__actions {
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
+
 .comment__actions .score-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   width: 80px;
   height: 36px;
-  background-color: hsl(228deg, 33%, 97%);
+  background-color: #f5f6fa;
   border-radius: 6px;
 }
+
 .comment__actions .score-wrap .score {
-  color: hsl(238deg, 40%, 52%);
+  color: #5457b6;
   font-weight: 500;
 }
+
 .comment__actions .score-wrap .upvote,
 .comment__actions .score-wrap .downvote {
   background-size: 16px;
@@ -71,21 +170,141 @@ body {
   height: 16px;
   cursor: pointer;
 }
+
 .comment__actions .score-wrap .upvote {
   background: url("../images/icon-plus.svg") center no-repeat;
 }
+
 .comment__actions .score-wrap .downvote {
   background: url("../images/icon-minus.svg") center no-repeat;
 }
+
 .comment__actions .btn-wrap .action {
   margin: 0 4px;
   font-weight: 500;
+  color: #5457b6;
   border: none;
   background-color: unset;
+  cursor: pointer;
+  opacity: 1;
+  -webkit-transition: opacity .3s linear;
+  transition: opacity .3s linear;
 }
+
+.comment__actions .btn-wrap .action:hover {
+  opacity: .5;
+}
+
 .comment__actions .btn-wrap .action::before {
-  content: "";
-  width: 16px;
-  height: 16px;
-  margin-left: 4px;
-}/*# sourceMappingURL=main.css.map */
+  content: '';
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  vertical-align: bottom;
+}
+
+.comment__actions .btn-wrap .delete {
+  color: #ed6468;
+}
+
+.comment__actions .btn-wrap .delete::before {
+  background: url("../images/icon-delete.svg") center no-repeat;
+  background-size: 14px;
+}
+
+.comment__actions .btn-wrap .reply::before {
+  background: url("../images/icon-reply.svg") center no-repeat;
+  background-size: 14px;
+}
+
+.comment__actions .btn-wrap .edit::before {
+  background: url("../images/icon-edit.svg") center no-repeat;
+  background-size: 14px;
+}
+
+.btn {
+  height: 50px;
+  width: 120px;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: 500;
+  background-color: #67727e;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 1;
+  -webkit-transition: opacity .3s linear;
+  transition: opacity .3s linear;
+}
+
+.btn:hover {
+  opacity: .5;
+}
+
+.btn__submit {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: button;
+  -ms-grid-column-align: end;
+      justify-self: end;
+  background-color: #5457b6;
+  font-size: 1.1rem;
+}
+
+.btn__yes, .btn__no {
+  width: 130px;
+}
+
+.btn__yes {
+  background-color: #ed6468;
+  margin-left: 8px;
+}
+
+.modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 90%;
+  padding: 16px;
+  border-radius: 6px;
+  background-color: white;
+  z-index: 100;
+}
+
+.modal__title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 16px 0;
+}
+
+.modal__btn-wrap {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 16px;
+}
+
+.mask {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: #000;
+  opacity: .3;
+  z-index: 99;
+}
+
+.modal.active,
+.mask.active {
+  display: block;
+}
+/*# sourceMappingURL=main.css.map */
