@@ -38,12 +38,24 @@ p {
   margin-left: 16px;
 }
 
+@media only screen and (min-width: 768px) {
+  .comments__replay-wrap-inner {
+    margin-left: 32px;
+  }
+}
+
 .comments__replay-wrap::before {
   content: '';
   display: inline-block;
-  width: 3px;
+  width: 4px;
   margin-bottom: 16px;
-  background-color: red;
+  background-color: #eaecf1;
+}
+
+@media only screen and (min-width: 768px) {
+  .comments__replay-wrap::before {
+    margin-left: 32px;
+  }
 }
 
 .comments__add-wrap {
@@ -59,6 +71,15 @@ p {
       -ms-flex-align: center;
           align-items: center;
   padding: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+  .comments__add {
+        grid-template-areas: "img textarea textarea textarea textarea button";
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
 }
 
 .comments__add .textarea {
@@ -79,6 +100,13 @@ p {
   grid-area: img;
 }
 
+@media only screen and (min-width: 768px) {
+  .comments__add .logged-user-img {
+    -ms-grid-column-align: center;
+        justify-self: center;
+  }
+}
+
 .comment {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -93,6 +121,15 @@ p {
   border-radius: 6px;
 }
 
+@media only screen and (min-width: 768px) {
+  .comment {
+    position: relative;
+    -webkit-box-align: end;
+        -ms-flex-align: end;
+            align-items: flex-end;
+  }
+}
+
 .comment__header, .comment__actions {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -104,6 +141,12 @@ p {
       -ms-flex-align: center;
           align-items: center;
   width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .comment__header {
+    width: 90%;
+  }
 }
 
 .comment__header .user {
@@ -134,6 +177,12 @@ p {
   margin: 16px 0;
 }
 
+@media only screen and (min-width: 768px) {
+  .comment__content {
+    width: 90%;
+  }
+}
+
 .comment__actions {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -153,9 +202,23 @@ p {
       -ms-flex-align: center;
           align-items: center;
   width: 80px;
-  height: 36px;
+  height: 40px;
   background-color: #f5f6fa;
   border-radius: 6px;
+}
+
+@media only screen and (min-width: 768px) {
+  .comment__actions .score-wrap {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 40px;
+    height: 80px;
+  }
 }
 
 .comment__actions .score-wrap .score {
@@ -177,6 +240,14 @@ p {
 
 .comment__actions .score-wrap .downvote {
   background: url("../images/icon-minus.svg") center no-repeat;
+}
+
+@media only screen and (min-width: 768px) {
+  .comment__actions .btn-wrap {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+  }
 }
 
 .comment__actions .btn-wrap .action {
@@ -250,6 +321,13 @@ p {
       justify-self: end;
   background-color: #5457b6;
   font-size: 1.1rem;
+}
+
+@media only screen and (min-width: 768px) {
+  .btn__submit {
+    -ms-grid-column-align: center;
+        justify-self: center;
+  }
 }
 
 .btn__yes, .btn__no {
