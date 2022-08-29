@@ -107,7 +107,7 @@ p {
   }
 }
 
-.comment {
+.comment__innerwrap {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -122,7 +122,7 @@ p {
 }
 
 @media only screen and (min-width: 768px) {
-  .comment {
+  .comment__innerwrap {
     position: relative;
     -webkit-box-align: end;
         -ms-flex-align: end;

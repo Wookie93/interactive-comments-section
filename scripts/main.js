@@ -1,16 +1,16 @@
 import { CommentList } from './CommentList.js';
 
-const btnDelete = document.querySelector('.action.delete');
-const bodyMask = document.querySelector('.mask');
-const modal = document.querySelector('.modal');
+// const btnDelete = document.querySelector('.action.delete');
+// const bodyMask = document.querySelector('.mask');
+// const modal = document.querySelector('.modal');
 
-function deleteComment() {
-  bodyMask.classList.add('active');
-  modal.classList.add('active');
-  document.body.classList.add('active');
-}
+// function deleteComment() {
+//   bodyMask.classList.add('active');
+//   modal.classList.add('active');
+//   document.body.classList.add('active');
+// }
 
-btnDelete.addEventListener('click', deleteComment);
+// btnDelete.addEventListener('click', deleteComment);
 
 fetch('../data/data.json')
   .then((res) => res.json())

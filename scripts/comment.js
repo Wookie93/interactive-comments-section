@@ -29,31 +29,34 @@ export class Comment {
 
   setContent = () => {
     return `
-    <div class="comment" id="${this.data.id}">
-    <div class="comment__header">
-      <div class="user">
-        <img src="${this.data.user.image.png}" class="user-img" width="32" height="32" alt="user-image">
-        <p>${this.data.user.username}</p>
+    <div class="comment"> 
+      <div class="comment__innerwrap" id="${this.data.id}">
+        <div class="comment__header">
+          <div class="user">
+            <img src="${this.data.user.image.png}" class="user-img" width="32" height="32" alt="user-image">
+            <p>${this.data.user.username}</p>
+          </div>
+          <p class="date">${this.data.createdAt}</p>
+        </div>
+        <div class="comment__content">
+          <p>${this.data.content}</p>
+        </div>
+        <div class="comment__actions">
+          <div class="score-wrap">
+            ${this.btnUpvote.outerHTML}
+            <div class="score">${this.score}</div>
+            ${this.btnDownvote.outerHTML}
+          </div>
+          <div class="btn-wrap">
+            ${this.btnDelete.outerHTML}
+            ${this.btnReply.outerHTML}
+          </div>
+        </div>
       </div>
-      <p class="date">${this.data.createdAt}</p>
-    </div>
-    <div class="comment__content">
-      <p>${this.data.content}</p>
-    </div>
-    <div class="comment__actions">
-      <div class="score-wrap">
-        ${this.btnUpvote.outerHTML}
-        <div class="score">${this.score}</div>
-        ${this.btnDownvote.outerHTML}
-      </div>
-      <div class="btn-wrap">
-        ${this.btnDelete.outerHTML}
-        ${this.btnReply.outerHTML}
-      </div>
-    </div>
     </div>
     `;
   };
 
-  setReplies = () => {};
+  deleteCom = () => {};
+  editCom = () => {};
 }
