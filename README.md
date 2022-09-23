@@ -1,13 +1,3 @@
-# TO DO:
-
- - check logged user
- - adding replies and new comments
- - sort comments via score and timestamp 
- - adding score
- - delete, repaly, edit - add events for comments
- - possibility to mark users you are replaying
- - create obj for every user ??
-
 # Inpiration from frontend Mentor - Interactive comments section
 
 ![Design preview for the Interactive comments section coding challenge](./design/desktop-preview.jpg)
