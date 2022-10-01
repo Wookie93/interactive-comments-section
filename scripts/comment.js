@@ -1,9 +1,7 @@
-//// Stworzyć elementy dla całej struktury
-//// Nie może być przez ``
-
 export class Comment {
-  constructor(data) {
+  constructor(data, isLogged = false) {
     this.data = data;
+    this.isLogged = isLogged;
     this.score = data.score;
     this.elements = [];
     this.init();
@@ -16,7 +14,7 @@ export class Comment {
 
   createElements = () => {
     const comment = document.createElement('div');
-    const commentInner = document.createElement('div'); /// here will be innerHTML
+    const commentInner = document.createElement('div');
     const commentHeader = document.createElement('div');
     const commentContent = document.createElement('div');
     const commentActions = document.createElement('div');
@@ -40,8 +38,8 @@ export class Comment {
     ] = this.elements;
 
     comment.setAttribute('class', 'comment');
+    comment.setAttribute('id', this.data.id);
     commentInner.setAttribute('class', 'comment__innerwrap');
-    commentInner.setAttribute('id', this.data.id);
     commentHeader.setAttribute('class', 'comment__header');
     commentContent.setAttribute('class', 'comment__content');
     commentActions.setAttribute('class', 'comment__actions');
@@ -54,17 +52,30 @@ export class Comment {
     <p class="date">${this.data.createdAt}</p>
     `;
     commentContent.innerHTML = `<p>${this.data.content}</p>`;
-    commentActions.innerHTML = `
+    if (this.isLogged) {
+      commentActions.innerHTML = `
+      <div class="score-wrap">
+        <div class="upvote"></div>
+        <div class="score">${this.score}</div>
+        <div class="downvote"></div>
+      </div>
+      <div class="btn-wrap">
+        <button class="action delete">Delete</button>
+        <button class="action edit">Edit</button>
+      </div>
+      `;
+    } else {
+      commentActions.innerHTML = `
     <div class="score-wrap">
       <div class="upvote"></div>
       <div class="score">${this.score}</div>
       <div class="downvote"></div>
     </div>
     <div class="btn-wrap">
-      <button class="action delete">Delete</button>
       <button class="action reply">Reply</button>
     </div>
     `;
+    }
   };
 
   renderComment = () => {
@@ -82,7 +93,6 @@ export class Comment {
     comment.appendChild(commentInner);
 
     this.addEvent(commentActions);
-
     return comment;
   };
 
@@ -93,8 +103,6 @@ export class Comment {
   checkBtn = (e) => {
     if (e.target.classList.contains('downvote')) this.updateScore('down');
     if (e.target.classList.contains('upvote')) this.updateScore('up');
-    if (e.target.classList.contains('delete')) return 'delete';
-    if (e.target.classList.contains('reply')) return 'reply';
   };
 
   updateScore = (val) => {

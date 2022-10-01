@@ -1,15 +1,20 @@
 import { Comment } from './comment.js';
 
+/*
+TO DO:
+  - add wrap with form for reply
+  - add checking logged user 
+  - add diffrent btns in order to login status
+*/
+
 export class CommentList {
-  constructor(data) {
+  constructor(data, currentUser) {
+    this.data = data;
+    this.currentUser = currentUser;
+    this.comments = [];
     this.wrap = document.querySelector('.comments .comments__inner');
     this.sendBtn = document.querySelector('.btn__submit');
     this.textarea = document.querySelector('.comments__add .textarea');
-    this.data = data;
-    this.comments = [];
-    this.toUpdate = false;
-    this.replyWrap = document.createElement('div');
-    this.innerReplyWrap = document.createElement('div');
     this.init();
   }
 
@@ -17,67 +22,128 @@ export class CommentList {
     if (!localStorage.getItem('data'))
       localStorage.setItem('data', JSON.stringify(this.data));
 
-    this.replyWrap.setAttribute('class', 'comments__replay-wrap');
-    this.innerReplyWrap.setAttribute('class', 'comments__replay-wrap-inner');
-
     this.comments = JSON.parse(localStorage.getItem('data'));
     this.renderList();
+    this.addEvents();
+  };
+
+  addEvents = () => {
     this.wrap.addEventListener('click', this.manageActions);
-    this.sendBtn.addEventListener('click', this.addComment);
+    this.sendBtn.addEventListener('click', (e) =>
+      this.addComment(e, this.wrap)
+    );
+  };
+
+  checkUser = (com) => {
+    if (com === this.currentUser.username) return true;
+  };
+
+  createReplyForm = () => {
+    const replyFormWrap = document.createElement('div');
+    const replyForm = document.createElement('form');
+    const replyFormTextArea = document.createElement('textarea');
+    const replyFormImg = document.createElement('img');
+    const replyFormButton = document.createElement('button');
+
+    replyFormWrap.classList.add('comments__form-wrap');
+    replyForm.classList.add('comments__form');
+    replyFormTextArea.classList.add('textarea');
+    replyFormImg.classList.add('logged-user-img');
+    replyFormButton.setAttribute('class', 'btn btn__submit btn-reply');
+
+    replyFormImg.setAttribute('src', this.currentUser.image.png);
+    replyFormButton.innerText = 'Reply';
+
+    replyForm.appendChild(replyFormButton);
+    replyForm.appendChild(replyFormImg);
+    replyForm.appendChild(replyFormTextArea);
+    replyFormWrap.appendChild(replyForm);
+
+    return replyFormWrap;
   };
 
   renderList = (arr = this.comments) => {
-    console.log(this.data);
     arr.forEach((com) => {
-      this.wrap.appendChild(new Comment(com).renderComment());
-      if (com.replies.length) {
-        this.replyWrap.appendChild(this.innerReplyWrap);
-        this.wrap.appendChild(this.replyWrap);
-      }
+      this.wrap.appendChild(
+        new Comment(com, this.checkUser(com.user.username)).renderComment()
+      );
+      if (com.replies.length) this.renderReplies(com.replies, com.id);
     });
   };
 
-  updateList = (com) => {
-    this.wrap.appendChild(new Comment(com).renderComment());
+  renderReplies = (arr, parentID) => {
+    const parentNode = document.getElementById(parentID);
+    const replyWrap = document.createElement('div');
+    const innerReplyWrap = document.createElement('div');
+
+    replyWrap.setAttribute('data-id', parentID);
+    replyWrap.setAttribute('class', 'comments__replay-wrap');
+    innerReplyWrap.setAttribute('class', 'comments__replay-wrap-inner');
+
+    arr.forEach((reply) =>
+      innerReplyWrap.appendChild(
+        new Comment(reply, this.checkUser(reply.user.username)).renderComment()
+      )
+    );
+
+    replyWrap.appendChild(innerReplyWrap);
+    parentNode.appendChild(replyWrap);
   };
 
-  addComment = (e) => {
-    e.preventDefault();
-    if (this.textarea.value === '') return;
+  updateList = (com, parent) => {
+    parent.appendChild(
+      new Comment(com, this.checkUser(com.user.username)).renderComment()
+    );
+    localStorage.setItem('data', JSON.stringify(this.comments));
+  };
 
-    //warunek nowy czy reply
+  addComment = (e, parent, isReply) => {
+    e.preventDefault();
+    /// nowy komentarz nie odpala się bo nie ma wrapa
+    /// Trzeba przepisać dodawanie odpowiedzi
+
+    const textValue = isReply
+      ? parent.querySelector('.comments__form-wrap .textarea').value
+      : this.textarea.value;
+
+    if (textValue === '') return;
 
     const newComment = {
       id: new Date().getTime(),
-      content: this.textarea.value,
+      content: textValue,
       createdAt: new Date().getTime(),
       score: 0,
-      user: {
-        image: {
-          png: './images/avatars/image-ramsesmiron.png',
-          webp: './images/avatars/image-ramsesmiron.webp',
-        },
-        username: 'ramsesmiron',
-      },
-      replies: [],
+      user: this.currentUser,
     };
-    this.comments.push(newComment);
-    this.updateList(newComment);
-    this.textarea.value = '';
-    localStorage.setItem('data', JSON.stringify(this.comments));
+
+    if (isReply) {
+      const index = this.comments.findIndex(
+        (el) => el.id === parseInt(parent.parentNode.getAttribute('data-id'))
+      );
+      this.comments[index].replies.push(newComment);
+      document.querySelector('.comments__form-wrap').remove();
+    } else {
+      newComment.replies = [];
+      this.comments.push(newComment);
+      this.textarea.value = '';
+    }
+
+    this.updateList(newComment, parent);
   };
 
   manageActions = (e) => {
     if (e.target.closest('button') === null) return;
 
     const actualList = JSON.parse(localStorage.getItem('data'));
-    const elID = e.target.parentNode.parentNode.parentNode.id;
+    const elID = e.target.parentNode.parentNode.parentNode.parentNode.id;
+
+    if (elID === null) return;
 
     if (e.target.closest('button').classList.contains('delete')) {
       this.deleteComment(actualList, elID);
     }
     if (e.target.closest('button').classList.contains('reply')) {
-      this.reply(e.target.parentNode.parentNode.parentNode.parentNode, elID);
+      this.replyToComment(e, elID);
     }
     if (e.target.closest('button').classList.contains('edit')) {
       this.editComment(actualList, elID);
@@ -85,39 +151,44 @@ export class CommentList {
   };
 
   deleteComment = (list, elID) => {
-    list.forEach((el) => {
-      if (el.id === parseInt(elID)) {
-        list.splice(list.indexOf(el), 1);
-        document.getElementById(`${elID}`).remove();
-      }
-    });
+    console.log(elID);
+    const element = document.getElementById(`${elID}`);
+    if (element.parentNode.classList.contains('comments__replay-wrap-inner')) {
+      const wrapID = parseInt(
+        element.parentNode.parentNode.getAttribute('data-id')
+      );
+      const index = list.findIndex((el) => el.id === wrapID);
+      list[index].replies = list[index].replies.filter(
+        (el) => el.id !== parseInt(elID)
+      );
+      /// check if wrap is empty and remove it
+      if (list[index].length === 0)
+        document.querySelector(`[data-id="${wrapID}"]`).remove();
+    } else {
+      list = list.filter((el) => el.id !== parseInt(elID));
+    }
+
+    element.remove();
     localStorage.setItem('data', JSON.stringify(list));
   };
 
-  // reply = (target, id) => {
-  //   innerReplyWrap.innerHTML = `
-  //     <div class="comments__add-wrap reply-wrap" data-id="${id}">
-  //     <form action="" class="comments__add reply">
-  //       <textarea class="textarea reply-textarea" type="text" placeholder="Add a comment..."></textarea>
-  //       <img class="logged-user-img" src="./images/avatars/image-amyrobson.png" width="44" height="44" alt="">
-  //       <button class="btn btn__reply" type="submit">reply</button>
-  //     </form>
-  //     </div>
-  //   `;
-  //   replyWrap.appendChild(innerReplyWrap);
-  //   target.appendChild(replyWrap);
+  replyToComment = (e, elID) => {
+    const previousWrap = document.querySelector('.comments__form-wrap');
+    if (previousWrap) previousWrap.remove();
 
-  //   document
-  //     .querySelector(`.reply-wrap[data-id="${id}"] .btn__reply`)
-  //     .addEventListener('click', (e) => this.addReply(e, id));
-  // };
+    const replyWrap =
+      document.querySelector(
+        `[data-id="${elID}"] .comments__replay-wrap-inner`
+      ) || document.getElementById(`${elID}`).parentNode;
 
-  // addReply = (e, elID) => {
-  //   const replyTextArea = document.querySelector(
-  //     `.reply-wrap[data-id="${elID}"] .reply-textarea`
-  //   );
-  //   this.addComment(e);
-  // };
+    const replyForm = this.createReplyForm();
+    replyWrap.appendChild(replyForm);
+
+    const replyBtn = document.querySelector('.btn-reply');
+    replyBtn.addEventListener('click', (e) =>
+      this.addComment(e, replyWrap, true)
+    );
+  };
 
   editComment = (list, elID) => {
     list.forEach((el) => {

@@ -17,9 +17,8 @@ import { CommentList } from './CommentList.js';
 fetch('../data/data.json')
   .then((res) => res.json())
   .then((data) => {
-    const comments = data.comments;
     setCurrentUser(data.currentUser);
-    new CommentList(comments);
+    new CommentList(data.comments, data.currentUser);
   });
 
 function setCurrentUser(data) {
