@@ -12,7 +12,7 @@ body {
   background-color: #f5f6fa;
 }
 
-body.open-modal {
+body.active {
   overflow: hidden;
 }
 
@@ -36,6 +36,7 @@ p {
 .comments__replay-wrap-inner {
   height: 100%;
   margin-left: 16px;
+  width: 100%;
 }
 
 @media only screen and (min-width: 768px) {
@@ -58,12 +59,13 @@ p {
   }
 }
 
-.comments__add-wrap {
+.comments__form-wrap, .comments__add-wrap {
   background-color: white;
   border-radius: 6px;
+  margin-bottom: 32px;
 }
 
-.comments__add {
+.comments__form, .comments__add {
   display: -ms-grid;
   display: grid;
       grid-template-areas: "textarea textarea" "img button";
@@ -74,7 +76,7 @@ p {
 }
 
 @media only screen and (min-width: 768px) {
-  .comments__add {
+  .comments__form, .comments__add {
         grid-template-areas: "img textarea textarea textarea textarea button";
     -webkit-box-align: start;
         -ms-flex-align: start;
@@ -82,7 +84,7 @@ p {
   }
 }
 
-.comments__add .textarea {
+.comments__form .textarea, .comments__add .textarea {
   -ms-grid-row: 1;
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
@@ -94,14 +96,14 @@ p {
   margin-bottom: 32px;
 }
 
-.comments__add .logged-user-img {
+.comments__form .logged-user-img, .comments__add .logged-user-img {
   -ms-grid-row: 2;
   -ms-grid-column: 1;
   grid-area: img;
 }
 
 @media only screen and (min-width: 768px) {
-  .comments__add .logged-user-img {
+  .comments__form .logged-user-img, .comments__add .logged-user-img {
     -ms-grid-column-align: center;
         justify-self: center;
   }
@@ -164,6 +166,16 @@ p {
   font-weight: 700;
 }
 
+.comment__header .user p.user-logged-flag {
+  color: white;
+  background-color: #5457b6;
+  margin-left: 8px;
+  padding: 0 4px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+
 .comment__header .user-img {
   margin-right: 16px;
 }
@@ -175,11 +187,40 @@ p {
 
 .comment__content {
   margin: 16px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {
   .comment__content {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
     width: 90%;
+  }
+}
+
+.comment__content .textarea {
+  height: 100px;
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid #eaecf1;
+  border-radius: 6px;
+  margin-bottom: 32px;
+}
+
+@media only screen and (min-width: 768px) {
+  .comment__content .textarea {
+    width: 70%;
   }
 }
 
@@ -301,7 +342,8 @@ p {
   border-radius: 6px;
   color: white;
   font-weight: 500;
-  background-color: #67727e;
+  font-size: 1.1rem;
+  background-color: #5457b6;
   text-transform: uppercase;
   cursor: pointer;
   opacity: 1;
@@ -319,8 +361,6 @@ p {
   grid-area: button;
   -ms-grid-column-align: end;
       justify-self: end;
-  background-color: #5457b6;
-  font-size: 1.1rem;
 }
 
 @media only screen and (min-width: 768px) {
@@ -330,8 +370,23 @@ p {
   }
 }
 
+.btn__update {
+  -ms-flex-item-align: end;
+      -ms-grid-row-align: end;
+      align-self: end;
+}
+
+@media only screen and (min-width: 768px) {
+  .btn__update {
+    -ms-flex-item-align: unset;
+        -ms-grid-row-align: unset;
+        align-self: unset;
+  }
+}
+
 .btn__yes, .btn__no {
   width: 130px;
+  background-color: #67727e;
 }
 
 .btn__yes {
@@ -341,7 +396,7 @@ p {
 
 .modal {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%, -50%);
@@ -371,7 +426,7 @@ p {
 
 .mask {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

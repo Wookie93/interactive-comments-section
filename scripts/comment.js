@@ -1,6 +1,7 @@
 export class Comment {
-  constructor(data, isLogged = false) {
+  constructor(data, isLogged = false, isReply = false) {
     this.data = data;
+    this.isReply = isReply;
     this.isLogged = isLogged;
     this.score = data.score;
     this.elements = [];
@@ -44,38 +45,35 @@ export class Comment {
     commentContent.setAttribute('class', 'comment__content');
     commentActions.setAttribute('class', 'comment__actions');
 
+    if (this.isReply) comment.setAttribute('data-role', 'reply');
+
     commentHeader.innerHTML = `
     <div class="user">
-      <img src="${this.data.user.image.png}" class="user-img" width="32" height="32" alt="user-image">
-      <p>${this.data.user.username}</p>
+      <img src="${
+        this.data.user.image.png
+      }" class="user-img" width="32" height="32" alt="user-image">
+      <p class="user-name">${this.data.user.username}</p>
+      ${this.isLogged ? `<p class="user-logged-flag">you</p>` : ''}
     </div>
     <p class="date">${this.data.createdAt}</p>
     `;
     commentContent.innerHTML = `<p>${this.data.content}</p>`;
-    if (this.isLogged) {
-      commentActions.innerHTML = `
+
+    commentActions.innerHTML = `
       <div class="score-wrap">
         <div class="upvote"></div>
         <div class="score">${this.score}</div>
         <div class="downvote"></div>
       </div>
       <div class="btn-wrap">
-        <button class="action delete">Delete</button>
-        <button class="action edit">Edit</button>
+      ${
+        this.isLogged
+          ? `<button class="action delete">Delete</button>
+      <button class="action edit">Edit</button>`
+          : `<button class="action reply">Reply</button>`
+      }
       </div>
       `;
-    } else {
-      commentActions.innerHTML = `
-    <div class="score-wrap">
-      <div class="upvote"></div>
-      <div class="score">${this.score}</div>
-      <div class="downvote"></div>
-    </div>
-    <div class="btn-wrap">
-      <button class="action reply">Reply</button>
-    </div>
-    `;
-    }
   };
 
   renderComment = () => {
@@ -106,12 +104,16 @@ export class Comment {
   };
 
   updateScore = (val) => {
-    if (val === 'down') this.score--;
-    if (val === 'up') this.score++;
+    val === 'down' ? this.score-- : this.score++;
 
     let arr = JSON.parse(localStorage.getItem('data'));
     arr.forEach((el) => {
       if (el.id === this.data.id) el.score = this.score;
+      else {
+        el.replies.forEach((reply) => {
+          if (reply.id === this.data.id) reply.score = this.score;
+        });
+      }
     });
     localStorage.setItem('data', JSON.stringify(arr));
 

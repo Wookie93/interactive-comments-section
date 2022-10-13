@@ -1,0 +1,69 @@
+.comments{
+    margin: auto;
+    max-width: 800px;
+
+    &__replay-wrap{
+        display: flex;
+
+        &-inner{
+            height: 100%;
+            margin-left: $marginVal;
+            width: 100%;
+            @media only screen and (min-width: 768px){
+                margin-left: $marginVal*2;
+            }
+        }
+
+        &::before{
+            content: '';
+            display: inline-block;
+            width: 4px;
+            margin-bottom: $marginVal;
+            background-color: $lightGray;
+
+            @media only screen and (min-width: 768px){
+                margin-left: $marginVal*2;
+            }
+        }
+    }
+
+    &__form-wrap,
+    &__add-wrap{
+        background-color: $white;
+        border-radius: $borderRadius;
+        margin-bottom: $marginVal*2;
+    }
+
+    &__form,
+    &__add{
+        display: grid;
+        grid-template-areas: 
+        "textarea textarea"
+        "img button"
+        ;
+        align-items: center;
+        padding: $paddingVal;
+        @media only screen and (min-width: 768px){
+            grid-template-areas: 
+            "img textarea textarea textarea textarea button"
+            ;
+            align-items: flex-start;
+        }
+
+        .textarea{
+            grid-area: textarea;
+            height: 100px;
+            padding: $paddingVal/2 $paddingVal;
+            border: 1px solid $lightGray;
+            border-radius: $borderRadius;
+            margin-bottom: $marginVal * 2;
+        }
+
+        .logged-user-img{
+            grid-area: img;
+            @media only screen and (min-width: 768px){
+                justify-self: center;
+            }
+        }
+    }
+}

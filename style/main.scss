@@ -1,224 +1,7 @@
-@import '_global';
 @import '_variables';
-
-
-.comments{
-    margin: auto;
-    max-width: 800px;
-
-    &__replay-wrap{
-        display: flex;
-
-        &-inner{
-            height: 100%;
-            margin-left: $marginVal;
-            @media only screen and (min-width: 768px){
-                margin-left: $marginVal*2;
-            }
-        }
-
-        &::before{
-            content: '';
-            display: inline-block;
-            width: 4px;
-            margin-bottom: $marginVal;
-            background-color: $lightGray;
-
-            @media only screen and (min-width: 768px){
-                margin-left: $marginVal*2;
-            }
-        }
-    }
-
-    &__add-wrap{
-        background-color: $white;
-        border-radius: $borderRadius;
-    }
-
-    &__add{
-        display: grid;
-        grid-template-areas: 
-        "textarea textarea"
-        "img button"
-        ;
-        align-items: center;
-        padding: $paddingVal;
-        @media only screen and (min-width: 768px){
-            grid-template-areas: 
-            "img textarea textarea textarea textarea button"
-            ;
-            align-items: flex-start;
-        }
-
-        .textarea{
-            grid-area: textarea;
-            height: 100px;
-            padding: $paddingVal/2 $paddingVal;
-            border: 1px solid $lightGray;
-            border-radius: $borderRadius;
-            margin-bottom: $marginVal * 2;
-
-        }
-        .logged-user-img{
-            grid-area: img;
-            @media only screen and (min-width: 768px){
-                justify-self: center;
-            }
-        }
-    }
-}
-
-.comment{
-    &__innerwrap{
-        display: flex;
-        flex-direction: column;
-        padding: $paddingVal;
-        margin-bottom: $marginVal;
-        background-color: $white;
-        border-radius: $borderRadius;
-    
-        @media only screen and (min-width: 768px){
-            position: relative;
-            align-items: flex-end;
-        }
-    }
-
-    &__header,
-    &__actions{
-        display: flex;
-    }
-
-    &__header{
-        align-items: center;
-        width: 100%;
-        @media only screen and (min-width: 768px){
-            width: 90%;
-        }
-
-        .user{
-            display: flex;
-            align-items: center;
-            margin-right: $marginVal;
-
-            p{
-                color: $darkBlue;
-                font-weight: 700;
-            }
-
-            &-img{
-                margin-right: $marginVal;
-            }
-        }
-        .date{
-            color: $grayishBlue;
-            font-size: .8rem;
-        }
-    }
-
-    &__content{
-        margin: $marginVal 0;
-        @media only screen and (min-width: 768px){
-            width: 90%;
-        }
-    }
-
-    &__actions{
-        justify-content: space-between;
-        align-items: center;
-        
-        .score-wrap{
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 80px;
-            height: 40px;
-            background-color: $veryLightGray;
-            border-radius: $borderRadius;
-
-            @media only screen and (min-width: 768px){
-                position: absolute;
-                top: $paddingVal;
-                left: $paddingVal;
-                flex-direction: column;
-                width: 40px;
-                height: 80px;
-            }
-
-            .score{
-                color: $moderateBlue;
-                font-weight: 500;
-            }
-
-            .upvote, 
-            .downvote{
-                background-size: 16px;
-                width: 16px;
-                height: 16px;
-                cursor: pointer;
-            }
-
-            .upvote{
-                background: url('../images/icon-plus.svg') center no-repeat ;
-            }
-
-            .downvote{
-                background: url('../images/icon-minus.svg') center no-repeat ;
-            }
-        }
-        .btn-wrap{
-            @media only screen and (min-width: 768px){
-                position: absolute;
-                top: $paddingVal;
-                right: $paddingVal;
-            }
-            .action{
-                margin: 0 ($marginVal/4);
-                font-weight: 500;
-                color: $moderateBlue;
-                border: none;
-                background-color: unset;
-                cursor: pointer;
-                opacity: 1;
-                transition: opacity .3s linear;
-
-                &:hover{
-                    opacity: .5;
-                }
-                &::before{
-                    content: '';
-                    display: inline-block;
-                    width: 18px;
-                    height: 18px;
-                    margin-right: $marginVal/2;
-                    vertical-align: bottom;
-                }
-            }
-            .delete{
-                color: $softRed;
-
-                &::before{
-                    background: url('../images/icon-delete.svg') center no-repeat;
-                    background-size: 14px;
-                }
-            }
-
-            .reply{
-
-                &::before{
-                    background: url('../images/icon-reply.svg') center no-repeat;
-                    background-size: 14px;
-                }
-            }
-            .edit{
-
-                &::before{
-                    background: url('../images/icon-edit.svg') center no-repeat;
-                    background-size: 14px;
-                }
-            }
-        }
-    }
-}
+@import '_global';
+@import '_commentsList';
+@import '_comment';
 
 .btn{
     height: 50px;
@@ -227,7 +10,8 @@
     border-radius: $borderRadius;
     color: $white;
     font-weight: 500;
-    background-color: $grayishBlue;
+    font-size: 1.1rem;
+    background-color: $moderateBlue;
     text-transform: uppercase;
     cursor: pointer;
     opacity: 1;
@@ -240,16 +24,22 @@
     &__submit{
         grid-area: button;
         justify-self: end;      
-        background-color: $moderateBlue;
-        font-size: 1.1rem;
         @media only screen and (min-width: 768px){
             justify-self: center;  
+        }
+    }
+
+    &__update{
+        align-self: end;
+        @media only screen and (min-width: 768px){
+            align-self: unset;  
         }
     }
 
     &__yes,
     &__no{
         width: 130px;
+        background-color: $grayishBlue;
     }
 
     &__yes{
@@ -260,7 +50,7 @@
 
 .modal{
     display: none;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -285,7 +75,7 @@
 
 .mask{
     display: none;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     right: 0;
