@@ -2,11 +2,7 @@
     &__innerwrap{
         display: flex;
         flex-direction: column;
-        padding: $paddingVal;
-        margin-bottom: $marginVal;
-        background-color: $white;
-        border-radius: $borderRadius;
-    
+ 
         @media only screen and (min-width: 768px){
             position: relative;
             align-items: flex-end;

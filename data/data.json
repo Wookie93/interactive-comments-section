@@ -20,6 +20,34 @@
         "username": "amyrobson"
       },
       "replies": [
+        {
+          "id": 1662410616645,
+          "content": "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
+          "createdAt": "1 week ago",
+          "score": 4,
+          "replyingTo": "amyrobson",
+          "user": {
+            "image": { 
+              "png": "./images/avatars/image-juliusomo.png",
+              "webp": "./images/avatars/image-juliusomo.webp"
+            },
+            "username": "juliusomo"
+          }
+        },
+        {
+          "id": 1662410616665,
+          "content": "If you're still new, I'd recommend focusing on the fundamentals of HTML, CSS, and JS before considering React. It's very tempting to jump ahead but lay a solid foundation first.",
+          "createdAt": "1 week ago",
+          "score": 4,
+          "replyingTo": "juliusomo",
+          "user": {
+            "image": { 
+              "png": "./images/avatars/image-amyrobson.png",
+              "webp": "./images/avatars/image-amyrobson.webp"
+            },
+            "username": "amyrobson"
+          }
+        }
       ]
     },
     {
@@ -64,6 +92,48 @@
           }
         }
       ]
+    },
+    {
+      "id": 1662510616448,
+      "content": "Test1",
+      "createdAt": "2 weeks ago",
+      "score": 5,
+      "user": {
+        "image": { 
+          "png": "./images/avatars/image-maxblagun.png",
+          "webp": "./images/avatars/image-maxblagun.webp"
+        },
+        "username": "test1"
+      },
+      "replies": []
+    },
+    {
+      "id": 1662510616449,
+      "content": "Test2",
+      "createdAt": "2 weeks ago",
+      "score": 5,
+      "user": {
+        "image": { 
+          "png": "./images/avatars/image-maxblagun.png",
+          "webp": "./images/avatars/image-maxblagun.webp"
+        },
+        "username": "test2"
+      },
+      "replies": []
+    },
+    {
+      "id": 1662510616450,
+      "content": "Test3",
+      "createdAt": "2 weeks ago",
+      "score": 5,
+      "user": {
+        "image": { 
+          "png": "./images/avatars/image-maxblagun.png",
+          "webp": "./images/avatars/image-maxblagun.webp"
+        },
+        "username": "test3"
+      },
+      "replies": []
     }
   ]
 }

@@ -40,7 +40,7 @@ export class Comment {
 
     comment.setAttribute('class', 'comment');
     comment.setAttribute('id', this.data.id);
-    commentInner.setAttribute('class', 'comment__innerwrap');
+    commentInner.setAttribute('class', 'container comment__innerwrap');
     commentHeader.setAttribute('class', 'comment__header');
     commentContent.setAttribute('class', 'comment__content');
     commentActions.setAttribute('class', 'comment__actions');

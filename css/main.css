@@ -10,6 +10,8 @@
 body {
   padding: 32px 16px;
   background-color: #f5f6fa;
+  margin: auto;
+  max-width: 800px;
 }
 
 body.active {
@@ -22,9 +24,11 @@ p {
   color: #67727e;
 }
 
-.comments {
-  margin: auto;
-  max-width: 800px;
+.container {
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: white;
+  border-radius: 6px;
 }
 
 .comments__replay-wrap {
@@ -117,10 +121,6 @@ p {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: white;
-  border-radius: 6px;
 }
 
 @media only screen and (min-width: 768px) {

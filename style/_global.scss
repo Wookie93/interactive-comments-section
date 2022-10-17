@@ -10,6 +10,8 @@
 body{
     padding: 2*$paddingVal $paddingVal;
     background-color: $veryLightGray;
+    margin: auto;
+    max-width: 800px;
 
     &.active{
         overflow: hidden;
@@ -21,4 +23,11 @@ p{
     font-size: 0.9rem;
     line-height: 1.4rem;
     color: $grayishBlue;
+}
+
+.container{
+    padding: $paddingVal;
+    margin-bottom: $marginVal;
+    background-color: $white;
+    border-radius: $borderRadius;
 }

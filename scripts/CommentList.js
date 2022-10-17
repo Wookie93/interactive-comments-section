@@ -12,9 +12,6 @@ export class CommentList {
   }
 
   init = () => {
-    if (!localStorage.getItem('data'))
-      localStorage.setItem('data', JSON.stringify(this.data));
-
     this.comments = JSON.parse(localStorage.getItem('data'));
     this.renderList();
     this.addEvents();
