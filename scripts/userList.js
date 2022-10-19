@@ -1,27 +1,26 @@
 export class UserList {
-  constructor(data, currUser) {
+  constructor(data) {
     this.data = data;
-    this.currentUser = currUser;
+    this.currentUser = JSON.parse(localStorage.getItem('currUser'));
+    this.newUser = null;
+    this.usersList = [];
     this.changeBtn = document.querySelector('.change-user');
+    this.setBtn = document.querySelector('.set-user');
     this.addUserBtn = document.querySelector('.add-user');
     this.closeBtn = document.querySelector('.modal__close');
     this.modal = document.querySelector('.modal.user-action');
     this.title = document.querySelector('.modal.user-action .modal__title');
     this.content = document.querySelector('.modal.user-action .modal__content');
     this.mask = document.querySelector('.mask');
-    this.usersList = [];
     this.init();
   }
 
   init = () => {
-    console.log('list is ready');
-    console.log(this.data);
     this.addEvents();
   };
 
   addEvents = () => {
     this.changeBtn.addEventListener('click', this.getUsersList);
-    this.addUserBtn.addEventListener('click', this.addNewUser);
     this.closeBtn.addEventListener('click', this.closeModal);
   };
 
@@ -36,12 +35,16 @@ export class UserList {
   renderUserList = (arr) => {
     this.title.innerHTML = `
     <h3>Logged as: ${this.currentUser.username}</h3>
+    <img src='${this.currentUser.image.png}'>
     <h4>Change user</h4>
     `;
     this.content.innerHTML = arr
-      .map((el) => {
+      .map((el, index) => {
         return `
-        <p>${el}</p>
+        <div class='user'>
+        <input type="radio" id="${el.username}" name="${el.username}" value=${index} />
+        <label for="${el.username}">${el.username}</label>
+        </div>
         `;
       })
       .join('');
@@ -53,35 +56,49 @@ export class UserList {
       return [...prev, ...el.replies];
     }, []);
 
-    this.usersList = this.getUserName([...this.data, ...replies]);
-
+    this.usersList = this.getUsers([...this.data, ...replies]);
     this.renderUserList(this.usersList);
+    this.content.addEventListener('click', this.manageRadio);
+    this.setBtn.addEventListener('click', this.setNewCurrentUser);
   };
 
-  getUserName = (arr) => {
-    const nameList = [];
+  getUsers = (arr) => {
+    const usersList = [];
     for (const com in arr) {
-      nameList.push(arr[com].user.username);
+      if (arr[com].user.username !== this.currentUser.username)
+        usersList.push(arr[com].user);
     }
-    return [...new Set(nameList)];
+
+    return [
+      ...new Map(usersList.map((item) => [item.username, item])).values(),
+    ];
   };
 
   closeModal = () => {
     this.toggleModalVisibility(this.modal, this.mask, false);
     this.content.innerHTML = '';
+    this.newUser = null;
   };
 
-  renderAddUserFrom = () => {
-    return `
-    <label>Name<lablel>
-    <input type="text" />
-    <div class="load-image"></div>
-    <button>Add new user</button>
-    `;
+  manageRadio = (e) => {
+    if (!e.target.getAttribute('type')) return;
+    const radioButtons = document.querySelectorAll('.user input[type="radio"]');
+    this.getNewCurrentUser(e.target.value);
+
+    for (const radioButton of radioButtons) {
+      radioButton.checked = false;
+    }
+
+    e.target.checked = true;
   };
 
-  addNewUser = () => {
-    this.toggleModalVisibility(this.modal, this.mask, true);
-    this.content.innerHTML = this.renderAddUserFrom();
+  getNewCurrentUser = (val) => {
+    this.newUser = this.usersList[val];
+  };
+
+  setNewCurrentUser = () => {
+    this.toggleModalVisibility(this.modal, this.mask, false);
+    localStorage.setItem('currUser', JSON.stringify(this.newUser));
+    location.reload();
   };
 }

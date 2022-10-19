@@ -4,27 +4,25 @@ import { UserList } from './userList.js';
 /* 
 TO DO 
 - ADD USER LIST OBJECT ---> done
-- ADD OPTION TO CHANGE AND ADD NEW USER ---> in progress
+- ADD OPTION TO CHANGE ---> in progress
 - LIST OF USERS IN MODAL --> done
 - ADD TOP PANEL ---> done
 - ADJUST STYLE
-- CHOOSE IMAGE FROM COMPUTER
-- EXAMPLE IMAGE IF NOT LOADED
 */
 
 fetch('../data/data.json')
   .then((res) => res.json())
   .then((data) => {
-    setCurrentUser(data.currentUser);
+    if (!localStorage.getItem('currUser'))
+      localStorage.setItem('currUser', JSON.stringify(data.currentUser));
 
-    if (!localStorage.getItem('data')) {
-      new CommentList(data.comments, data.currentUser);
-      new UserList(data.comments, data.currentUser);
-    } else {
-      const dataF = JSON.parse(localStorage.getItem('data'));
-      new CommentList(dataF, data.currentUser);
-      new UserList(dataF, data.currentUser);
-    }
+    if (!localStorage.getItem('data'))
+      localStorage.setItem('data', JSON.stringify(data.comments));
+
+    setCurrentUser(JSON.parse(localStorage.getItem('currUser')));
+
+    new CommentList(JSON.parse(localStorage.getItem('data')));
+    new UserList(JSON.parse(localStorage.getItem('data')));
   });
 
 function setCurrentUser(data) {

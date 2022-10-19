@@ -1,10 +1,9 @@
 import { Comment } from './comment.js';
 
 export class CommentList {
-  constructor(data, currentUser) {
-    this.data = data;
-    this.currentUser = currentUser;
-    this.comments = [];
+  constructor(data) {
+    this.currentUser = JSON.parse(localStorage.getItem('currUser'));
+    this.comments = data;
     this.wrap = document.querySelector('.comments .comments__inner');
     this.sendBtn = document.querySelector('.btn__submit');
     this.textarea = document.querySelector('.comments__add .textarea');
@@ -12,7 +11,6 @@ export class CommentList {
   }
 
   init = () => {
-    this.comments = JSON.parse(localStorage.getItem('data'));
     this.renderList();
     this.addEvents();
   };
