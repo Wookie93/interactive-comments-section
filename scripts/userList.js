@@ -34,9 +34,11 @@ export class UserList {
 
   renderUserList = (arr) => {
     this.title.innerHTML = `
-    <h3>Logged as: ${this.currentUser.username}</h3>
+    <h3>Change user</h3>
+    <div class='logged-as'>
+    <p>Logged as: ${this.currentUser.username}</p>
     <img src='${this.currentUser.image.png}'>
-    <h4>Change user</h4>
+    </div>
     `;
     this.content.innerHTML = arr
       .map((el, index) => {

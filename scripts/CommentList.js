@@ -13,6 +13,7 @@ export class CommentList {
   init = () => {
     this.renderList();
     this.addEvents();
+    this.setCurrentUser();
   };
 
   addEvents = () => {
@@ -20,6 +21,12 @@ export class CommentList {
     this.sendBtn.addEventListener('click', (e) =>
       this.addComment(e, this.wrap)
     );
+  };
+
+  setCurrentUser = () => {
+    document
+      .querySelector('.logged-user-img')
+      .setAttribute('src', this.currentUser.image.png);
   };
 
   checkUser = (com) => {
@@ -37,7 +44,7 @@ export class CommentList {
     replyForm.classList.add('comments__form');
     replyFormTextArea.classList.add('textarea');
     replyFormImg.classList.add('logged-user-img');
-    replyFormButton.setAttribute('class', 'btn btn__submit btn-reply');
+    replyFormButton.setAttribute('class', 'btn btn-reply');
 
     replyFormTextArea.textContent = `@${user}`;
 
@@ -138,7 +145,7 @@ export class CommentList {
     localStorage.setItem('data', JSON.stringify(this.comments));
   };
 
-  addComment = (e, parent, isReply) => {
+  addComment = (e, parent, replyingTo, isReply) => {
     e.preventDefault();
 
     const textValue = isReply
@@ -159,6 +166,7 @@ export class CommentList {
       const index = this.comments.findIndex(
         (el) => el.id === parseInt(parent.parentNode.getAttribute('data-id'))
       );
+      newComment.replyingTo = replyingTo;
       this.comments[index].replies.push(newComment);
       document.querySelector('.comments__form-wrap').remove();
     } else {
@@ -173,10 +181,12 @@ export class CommentList {
   manageActions = (e) => {
     if (e.target === null) return;
     if (e.target.closest('button') === null) return;
-    if (e.target.parentNode.parentNode === null) return;
+    if (e.target.classList.contains('.btn-reply') === null) return;
+
+    const element = e.target.closest('button').classList[1];
+    if (element === 'btn__update' || element === 'btn-reply') return;
 
     let elID = e.target.parentNode.parentNode.parentNode.parentNode.id;
-    const element = e.target.closest('button').classList[1];
 
     switch (element) {
       case 'delete':
@@ -263,9 +273,11 @@ export class CommentList {
     const replyForm = this.createReplyForm(this.markUser(elID));
     replyWrap.appendChild(replyForm);
 
+    replyForm.scrollIntoView({ behavior: 'smooth' });
+
     const replyBtn = document.querySelector('.btn-reply');
     replyBtn.addEventListener('click', (e) =>
-      this.addComment(e, replyWrap, true)
+      this.addComment(e, replyWrap, this.markUser(elID), true)
     );
   };
 

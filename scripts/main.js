@@ -19,14 +19,7 @@ fetch('../data/data.json')
     if (!localStorage.getItem('data'))
       localStorage.setItem('data', JSON.stringify(data.comments));
 
-    setCurrentUser(JSON.parse(localStorage.getItem('currUser')));
-
     new CommentList(JSON.parse(localStorage.getItem('data')));
     new UserList(JSON.parse(localStorage.getItem('data')));
-  });
-
-function setCurrentUser(data) {
-  document
-    .querySelector('.logged-user-img')
-    .setAttribute('src', data.image.png);
-}
+  })
+  .catch((err) => console.log(err));

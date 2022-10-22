@@ -335,6 +335,39 @@ p {
   background-size: 14px;
 }
 
+.user-action .modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: none;
+  background-color: snow;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.user-action .logged-as {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.user-action .logged-as img {
+  width: 32px;
+  height: auto;
+  margin-left: 8px;
+}
+
+.user-action .modal__content {
+  margin-bottom: 32px;
+}
+
+.user-action .modal__content .user {
+  margin-bottom: 8px;
+}
+
 .btn {
   height: 50px;
   width: 120px;
@@ -402,6 +435,7 @@ p {
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   width: 90%;
+  max-width: 800px;
   padding: 16px;
   border-radius: 6px;
   background-color: white;
