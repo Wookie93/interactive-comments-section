@@ -1,8 +1,8 @@
-import { CommentList } from './CommentList.js';
-import { UserList } from './userList.js';
+import { CommentList } from 'CommentList.js';
+import { UserList } from 'userList.js';
 
 
-fetch('interactive-comments-section/data/data.json')
+fetch('data/data.json')
   .then((res) => res.json())
   .then((data) => {
     if (!localStorage.getItem('currUser'))
