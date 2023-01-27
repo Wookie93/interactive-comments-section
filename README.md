@@ -8,6 +8,8 @@ The challenge is to build out this interactive comments section and get it looki
 
 ### Expected behaviour
 
+DEMO: https://wookie93.github.io/interactive-comments-section/
+
 - First-level comments ordered by their score,
 - Replying to a comment adds the new reply to the bottom of the nested replies within that comment.
 - A confirmation modal will pop up before a comment or reply is deleted.
