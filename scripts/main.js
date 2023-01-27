@@ -1,16 +1,8 @@
 import { CommentList } from './CommentList.js';
 import { UserList } from './userList.js';
 
-/* 
-TO DO 
-- ADD USER LIST OBJECT ---> done
-- ADD OPTION TO CHANGE ---> in progress
-- LIST OF USERS IN MODAL --> done
-- ADD TOP PANEL ---> done
-- ADJUST STYLE
-*/
 
-fetch('../data/data.json')
+fetch('interactive-comments-section/data/data.json')
   .then((res) => res.json())
   .then((data) => {
     if (!localStorage.getItem('currUser'))
