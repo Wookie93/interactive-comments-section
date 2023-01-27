@@ -1,5 +1,5 @@
-import { CommentList } from 'CommentList.js';
-import { UserList } from 'userList.js';
+import { CommentList } from './CommentList.js';
+import { UserList } from './userList.js';
 
 
 fetch('data/data.json')
